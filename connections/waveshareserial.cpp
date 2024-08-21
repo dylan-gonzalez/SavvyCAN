@@ -242,21 +242,25 @@ bool WaveshareSerial::piSendFrame(const CANFrame& frame)
     buffer[dataFrameLen] = (char)0xC0; // Frame type always starts with 0xC0
     if(frame.hasExtendedFrameFormat())
     {
-        buffer[dataFrameLen] |= (char)0x20; // Extended frame set bit 5
+        buffer[dataFrameLen] = (char)(buffer[dataFrameLen]) | (char)0x20; // Extended frame set bit 5
+
     }
     else
     {
-        buffer[dataFrameLen] &= (char)0xDF; // Extended frame clear bit 5
+        buffer[dataFrameLen] = (char)(buffer[dataFrameLen]) & (char)0xDF; // Extended frame clear bit 5
     }
     if(frame.frameType() == QCanBusFrame::RemoteRequestFrame)
     {
-        buffer[dataFrameLen] |= (char)0x10; // Remote frame set bit 4
+        buffer[dataFrameLen] = (char)(buffer[dataFrameLen]) | (char)0x10; // Remote frame set bit 4
+
     }
     else
     {
-        buffer[dataFrameLen] &= (char)0xEF; // Extended frame clear bit 4
+        buffer[dataFrameLen] = (char)(buffer[dataFrameLen]) & (char)0xEF; // Extended frame clear bit 4
+
     }
-    buffer[dataFrameLen] |= (char)(frame.payload().length() & 0xF); // Data frame length bits 0-3
+    buffer[dataFrameLen] = (char)(buffer[dataFrameLen]) | (char)(frame.payload().length() & 0xF); // Data frame length bits 0-3
+
     dataFrameLen++;
 
     // Byte 2-3: ID

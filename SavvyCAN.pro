@@ -23,7 +23,6 @@ TEMPLATE = app
 QMAKE_INFO_PLIST = Info.plist.template
 ICON = icons/SavvyIcon.icns
 
-QMAKE_CXXFLAGS += -Wa,-mbig-obj
 
 SOURCES += main.cpp\
     canbridgewindow.cpp \
