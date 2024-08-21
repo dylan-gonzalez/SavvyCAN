@@ -23,12 +23,15 @@ TEMPLATE = app
 QMAKE_INFO_PLIST = Info.plist.template
 ICON = icons/SavvyIcon.icns
 
+QMAKE_CXXFLAGS += -Wa,-mbig-obj
+
 SOURCES += main.cpp\
     canbridgewindow.cpp \
     connections/canlogserver.cpp \
     connections/canserver.cpp \
     connections/lawicel_serial.cpp \
     connections/mqtt_bus.cpp \
+    connections/waveshareserial.cpp \
     dbc/dbcnodeduplicateeditor.cpp \
     framesenderobject.cpp \
     mqtt/qmqtt_client.cpp \
@@ -116,6 +119,7 @@ HEADERS  += mainwindow.h \
     connections/lawicel_serial.h \
     connections/socketcand.h \
     connections/mqtt_bus.h \
+    connections/waveshareserial.h \
     dbc/dbcnodeduplicateeditor.h \
     dbc/dbcnoderebaseeditor.h \
     framesenderobject.h \

@@ -7,6 +7,7 @@
 #include "lawicel_serial.h"
 #include "canserver.h"
 #include "canlogserver.h"
+#include "waveshareserial.h"
 
 using namespace CANCon;
 
@@ -15,6 +16,8 @@ CANConnection* CanConFactory::create(type pType, QString pPortName, QString pDri
     switch(pType) {
     case SERIALBUS:
         return new SerialBusConnection(pPortName, pDriverName);
+    case WAVESHARE_SERIAL:
+        return new WaveshareSerial(pPortName);
     case GVRET_SERIAL:
         if(pPortName.contains(".") && !pPortName.contains("tty") && !pPortName.contains("serial"))
         return new GVRetSerial(pPortName, true);

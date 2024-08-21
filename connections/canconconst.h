@@ -14,6 +14,7 @@ namespace CANCon {
 
     enum type
     {
+        WAVESHARE_SERIAL,
         GVRET_SERIAL,
         KVASER,
         SERIALBUS,

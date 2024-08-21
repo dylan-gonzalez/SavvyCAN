@@ -22,6 +22,7 @@ NewConnectionDialog::NewConnectionDialog(QVector<QString>* gvretips, QVector<QSt
     }
 
 
+    connect(ui->rbWaveshare, &QAbstractButton::clicked, this, &NewConnectionDialog::handleConnTypeChanged);
     connect(ui->rbGVRET, &QAbstractButton::clicked, this, &NewConnectionDialog::handleConnTypeChanged);
     connect(ui->rbSocketCAN, &QAbstractButton::clicked, this, &NewConnectionDialog::handleConnTypeChanged);
     connect(ui->rbRemote, &QAbstractButton::clicked, this, &NewConnectionDialog::handleConnTypeChanged);
@@ -62,6 +63,7 @@ void NewConnectionDialog::handleCreateButton()
 
 void NewConnectionDialog::handleConnTypeChanged()
 {
+    if (ui->rbWaveshare->isChecked()) selectSerial();
     if (ui->rbGVRET->isChecked()) selectSerial();
     if (ui->rbSocketCAN->isChecked()) selectSocketCan();
     if (ui->rbLawicel->isChecked()) selectLawicel();
@@ -275,6 +277,9 @@ void NewConnectionDialog::setPortName(CANCon::type pType, QString pPortName, QSt
 
     switch(pType)
     {
+        case CANCon::WAVESHARE_SERIAL:
+            ui->rbWaveshare->setChecked(true);
+            break;
         case CANCon::GVRET_SERIAL:
             ui->rbGVRET->setChecked(true);
             break;
@@ -307,6 +312,7 @@ void NewConnectionDialog::setPortName(CANCon::type pType, QString pPortName, QSt
 
     switch(pType)
     {
+        case CANCon::WAVESHARE_SERIAL:
         case CANCon::GVRET_SERIAL:
         case CANCon::LAWICEL:
         {
@@ -355,6 +361,7 @@ void NewConnectionDialog::setPortName(CANCon::type pType, QString pPortName, QSt
 QString NewConnectionDialog::getPortName()
 {
     switch( getConnectionType() ) {
+    case CANCon::WAVESHARE_SERIAL:
     case CANCon::GVRET_SERIAL:
     case CANCon::SERIALBUS:
     case CANCon::REMOTE:
@@ -403,6 +410,7 @@ int NewConnectionDialog::getBusSpeed()
 
 CANCon::type NewConnectionDialog::getConnectionType()
 {
+    if (ui->rbWaveshare->isChecked()) return CANCon::WAVESHARE_SERIAL;
     if (ui->rbGVRET->isChecked()) return CANCon::GVRET_SERIAL;
     if (ui->rbSocketCAN->isChecked()) return CANCon::SERIALBUS;
     if (ui->rbRemote->isChecked()) return CANCon::REMOTE;
